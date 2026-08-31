@@ -1,0 +1,23 @@
+[
+  {
+    "id": 100000001,
+    "user": { "login": "dev-human", "type": "User" },
+    "state": "APPROVED",
+    "commit_id": "oldsha0000000000000000000000000000000000",
+    "submitted_at": "2026-08-20T10:00:00Z"
+  },
+  {
+    "id": 100000002,
+    "user": { "login": "reviewer-bot[bot]", "type": "Bot" },
+    "state": "COMMENTED",
+    "commit_id": "headsha111111111111111111111111111111111",
+    "submitted_at": "2026-08-27T11:59:00Z"
+  },
+  {
+    "id": 100000003,
+    "user": { "login": "reviewer-bot[bot]", "type": "Bot" },
+    "state": "APPROVED",
+    "commit_id": "headsha111111111111111111111111111111111",
+    "submitted_at": "2026-08-27T12:00:00Z"
+  }
+]

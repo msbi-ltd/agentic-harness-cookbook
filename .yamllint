@@ -1,0 +1,14 @@
+# yamllint config for this repo. The default ruleset flags GitHub Actions'
+# own syntax (the `on:` key reads as "truthy", workflow lines run past 80
+# chars, no `---` document start). Those are style opinions, not errors here,
+# so relax them; keep the checks that catch a genuinely malformed document.
+extends: default
+
+rules:
+  line-length: disable
+  document-start: disable
+  truthy:
+    allowed-values: ["true", "false", "on"]
+  comments:
+    min-spaces-from-content: 1
+  comments-indentation: disable
