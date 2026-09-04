@@ -40,6 +40,7 @@ The patterns are grouped below in a suggested reading order.
 |  | [Diff-budget escape valve](patterns/diff-budget-escape-valve.md) | controlling change size without blocking justified exceptions |
 |  | [Three-outcome script contract](patterns/script-three-outcome-contract.md) | separating pass, findings and could-not-assess |
 |  | [Agent beats and heartbeat](patterns/agent-beats-heartbeat.md) | distinguishing agent progress from controller liveness |
+|  | [Commit-bound release notes and a once-per-version splash](patterns/commit-bound-release-notes.md) | generating traceable user-facing release communication from one immutable change range |
 | **Testing and CI evidence** | [Fast feedback and merge evidence](patterns/test-evidence-layers.md) | using smoke tests locally while keeping full required CI evidence |
 |  | [Characterization tests before agent-led refactoring](patterns/characterization-tests-before-refactoring.md) | preserving observed behaviour while poorly understood code is changed |
 |  | [Human-readable test and coverage evidence](patterns/human-readable-test-and-coverage-evidence.md) | turning machine reports into honest GitHub Actions summaries without creating a second gate |
