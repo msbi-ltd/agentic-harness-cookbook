@@ -1,6 +1,6 @@
 # Pattern: the complete guardrail contract
 
-> **Status:** Observed pattern · **Last verified:** 2026-08-31  
+> **Status:** Observed pattern · **Last verified:** 2026-11-15  
 > **Enforcement:** review checklist + tests for clean, verdict and unavailable states  
 > **Related pattern:** [Three-outcome contract](script-three-outcome-contract.md)
 

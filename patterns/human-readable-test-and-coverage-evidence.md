@@ -1,6 +1,6 @@
 # Pattern: human-readable test and coverage evidence
 
-> **Status:** Observed pattern · **Last verified:** 2026-08-31  
+> **Status:** Observed pattern · **Last verified:** 2026-11-15  
 > **Enforcement:** test commands remain authoritative; summaries explain their evidence  
 > **Reference implementation:** JUnit XML, Vitest JSON and GitHub Actions job summaries
 

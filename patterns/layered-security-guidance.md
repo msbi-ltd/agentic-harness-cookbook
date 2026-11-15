@@ -1,6 +1,6 @@
 # Pattern: layered security guidance
 
-> **Status:** Implementation pattern · **Last verified:** 2026-08-31  
+> **Status:** Implementation pattern · **Last verified:** 2026-11-15  
 > **Use when:** coding agents can change security-sensitive code  
 > **Goal:** give each security control one clear job
 
@@ -300,9 +300,14 @@ source areas it claimed to cover. That matters: valid YAML is not proof that a
 plugin recognises the schema, and a rule that matches half the repository is
 noise rather than protection.
 
-This created six distinct layers: threat model, local semantic guidance,
-deterministic edit patterns, static and dependency analysis, model review, and
-human risk decisions. The local layers turned advice such as “protect
+Grouped by the job each one does, this created six distinct layers: threat
+model, local semantic guidance, deterministic edit patterns, static and
+dependency analysis, model review, and human risk decisions. (The source
+harness's own list is cut by tool and moment instead: the in-session guidance
+plugin, the static scan in CI, a preventive skill loaded for security-relevant
+work, verification by hand before merge, a process hook that is explicitly not
+a scanner, and the two local files that tune the plugin. Only the static scan
+is a blocking gate.) The local layers turned advice such as “protect
 credentials” into exact rules about which workflow may read which secret.
 
 Before publishing custom security guidance, remove product-specific paths,

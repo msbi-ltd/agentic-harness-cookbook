@@ -1,6 +1,6 @@
 # Pattern: separate fast feedback from merge evidence
 
-> **Status:** Implementation pattern · **Last verified:** 2026-08-31  
+> **Status:** Implementation pattern · **Last verified:** 2026-11-15  
 > **Use when:** a project has unit, integration and browser tests  
 > **Goal:** keep local feedback fast without overstating what CI proved
 

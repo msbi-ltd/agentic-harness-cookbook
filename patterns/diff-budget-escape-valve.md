@@ -1,6 +1,6 @@
 # Pattern: diff budget with a named escape valve
 
-> **Status:** Reference implementation · **Last verified:** 2026-08-31  
+> **Status:** Reference implementation · **Last verified:** 2026-11-15  
 > **Tested against:** `scripts/check_diff_budget.py` (`tests/test_check_diff_budget.py`)  
 > **Enforcement:** CI check on every PR (required status check to actually gate)  
 > **Reference implementation:** `scripts/check_diff_budget.py`

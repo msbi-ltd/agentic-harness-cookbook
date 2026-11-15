@@ -1,7 +1,7 @@
 # Pattern: Codex code review as an external review signal
 
 > **Status:** Observed integration pattern  
-> **Last verified:** 2026-08-31  
+> **Last verified:** 2026-11-15  
 > **Tested route:** Codex code review through the GitHub connector  
 > **Enforcement:** quality signal only; not an independent approval or a complete merge gate
 
@@ -91,6 +91,14 @@ It does not claim that:
 - CI-managed Codex review was implemented.
 
 A CI-managed review using the Codex SDK or GitHub Action is a possible extension. It could provide a structured, commit-bound status, but it adds credentials, workflow code and failure modes that must be designed and tested. It should be documented as a separate implementation after it exists.
+
+**Update, November 2026.** The source harness now has a managed Codex review,
+in a different shape from the one sketched above: the durable controller
+schedules it, it runs as a bounded worker with a pinned model, and a separate
+CI job publishes the validated result under the reviewer identity. That route
+is described in [Capability-isolated reviewer](reviewer-isolation.md) under
+"Where the review runs". The connector review on this page stays enabled
+beside it as a comparison signal, with the same limits as before.
 
 ## Further reading
 

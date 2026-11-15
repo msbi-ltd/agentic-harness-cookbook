@@ -1,6 +1,6 @@
 # Pattern: machine-checked documentation claims
 
-> **Status:** Reference implementation · **Last verified:** 2026-08-31  
+> **Status:** Reference implementation · **Last verified:** 2026-11-15  
 > **Tested against:** `scripts/check_docs_facts.py` (`tests/test_check_docs_facts.py`)  
 > **Enforcement:** CI check, or a report-only run for docs not present on every checkout  
 > **Reference implementation:** `scripts/check_docs_facts.py`
@@ -150,6 +150,12 @@ python3 check_docs_facts.py --path CLAUDE.md --repo-root .
 # exit 2 on a fresh agent worktree just means "this checkout doesn't carry
 # CLAUDE.md" -- expected there, worth investigating on the main checkout
 ```
+
+The source harness was in exactly this position when the page was written. It
+has since moved its agent-instruction files into the tracked tree, so every
+worktree and every runner has them and the first paragraph's default applies.
+If you can make that move, make it: an instruction file that a fresh worktree
+lacks is also one a dispatched worker cannot read.
 
 Two design choices are worth calling out:
 
