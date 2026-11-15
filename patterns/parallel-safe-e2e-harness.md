@@ -1,6 +1,6 @@
 # Pattern: a parallel-safe browser-test harness
 
-> **Status:** Implementation pattern · **Last verified:** 2026-08-31  
+> **Status:** Implementation pattern · **Last verified:** 2026-11-15  
 > **Use when:** browser suites may run concurrently on one host  
 > **Goal:** make each run isolated, repeatable and diagnosable
 

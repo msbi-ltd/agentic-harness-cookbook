@@ -1,6 +1,6 @@
 # Pattern: review evidence bound to a commit, not a PR
 
-> **Status:** Reference implementation · **Last verified:** 2026-08-31  
+> **Status:** Reference implementation · **Last verified:** 2026-11-15  
 > **Tested against:** `scripts/check_review_evidence.py` (`tests/test_check_review_evidence.py`)  
 > **Enforcement:** CI required check on `pull_request` + `pull_request_review` (or native stale-review dismissal)  
 > **Reference implementation:** `scripts/check_review_evidence.py`
@@ -153,3 +153,12 @@ invalidates the review under this rule. That's a real cost of the
 pattern, not a bug in it: the alternative (trying to detect "meaningfully
 unchanged" automatically) is its own, much harder problem, and getting it
 wrong reopens the exact gap this pattern closes.
+
+If the cost becomes real, admit one case you can prove and nothing else. The
+source harness later did this for the most common churn, merging the base
+branch into a reviewed pull request: a new head keeps its review only when it
+consists solely of merges from the base branch and the pull request's own
+path-and-patch diff is identical to the reviewed one. The comparison is made
+by deterministic code, not by a model's opinion of the change. When it cannot
+be read or is ambiguous, the head is held as unclassified and returns to
+review. A reorder, a squash or any edit still invalidates the review.

@@ -1,6 +1,6 @@
 # Pattern: direct-push guard (Claude Code hooks)
 
-> **Status:** Reference implementation · **Last verified:** 2026-08-31  
+> **Status:** Reference implementation · **Last verified:** 2026-11-15  
 > **Tested against:** `scripts/git_push_target.py` (`tests/test_git_push_target.py`)  
 > **Enforcement:** Local pre-tool hook (fast net) **plus** server-side branch protection (the real boundary)  
 > **Reference implementation:** `scripts/git_push_target.py` + `.claude/hooks/git-guard.sh`

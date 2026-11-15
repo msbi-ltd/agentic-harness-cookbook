@@ -1,6 +1,6 @@
 # Pattern: required checks should always report
 
-> **Status:** Implementation pattern · **Last verified:** 2026-08-31  
+> **Status:** Implementation pattern · **Last verified:** 2026-11-15  
 > **Use when:** branch protection requires a CI job  
 > **Goal:** avoid missing evidence hidden behind job-level conditions
 

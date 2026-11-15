@@ -23,7 +23,8 @@ The source harness began as a mostly linear conversational pipeline. As it
 evolved, another boundary became clear: **governance inside the agent loop is not
 enough if the workflow depends on one long-lived conversation.** [Durable
 controller, disposable agent workers](patterns/durable-controller-agent-workers.md)
-covers the next step.
+covers the next step. The source harness has run on such a controller since
+October 2026, and the conversational loop is retired.
 
 ## Patterns
 
@@ -41,6 +42,7 @@ The patterns are grouped below in a suggested reading order.
 |  | [Three-outcome script contract](patterns/script-three-outcome-contract.md) | separating pass, findings and could-not-assess |
 |  | [Agent beats and heartbeat](patterns/agent-beats-heartbeat.md) | distinguishing agent progress from controller liveness |
 |  | [Commit-bound release notes and a once-per-version splash](patterns/commit-bound-release-notes.md) | generating traceable user-facing release communication from one immutable change range |
+|  | [Ask only what needs a person](patterns/ask-only-what-needs-a-person.md) | cutting rubber-stamp questions without handing the agent authority |
 | **Testing and CI evidence** | [Fast feedback and merge evidence](patterns/test-evidence-layers.md) | using smoke tests locally while keeping full required CI evidence |
 |  | [Characterization tests before agent-led refactoring](patterns/characterization-tests-before-refactoring.md) | preserving observed behaviour while poorly understood code is changed |
 |  | [Human-readable test and coverage evidence](patterns/human-readable-test-and-coverage-evidence.md) | turning machine reports into honest GitHub Actions summaries without creating a second gate |

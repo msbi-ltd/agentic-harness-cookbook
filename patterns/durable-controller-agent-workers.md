@@ -1,15 +1,16 @@
 # Pattern: durable controller, disposable agent workers
 
-> **Status:** Work in progress · **Last verified:** 2026-08-31  
-> **Tested against:** extracted from a live autonomous delivery loop after repeated session-liveness and CI-wait stalls  
+> **Status:** In use · **Last verified:** 2026-11-15  
+> **Tested against:** the durable controller that replaced the source harness's conversational delivery loop  
 > **Enforcement:** deterministic controller owns state transitions; agents own bounded work  
 > **Reference implementation:** pattern only; adapt the state store and scheduler to your platform
 >
-> **Work in progress:** the controller described here is still being implemented and
-> tuned. The responsibility boundary is stable, but state names, configuration and
-> operational details may change. This page will gain validated implementation
-> examples once the controller has completed its rollout and observation period.
-> Treat it as design guidance for now, not as a drop-in implementation.
+> **Status note:** this page was first written while the controller was still an
+> observe-only trial. Since October 2026 it has been the only delivery path in the
+> source harness, and the conversational loop it replaced, with its wake-up
+> watchdog and supervisor timer, is retired. The responsibility boundary below is
+> what was built. State names, capacities and intervals in the examples are
+> illustrative; where the source harness chose differently, the text says so.
 
 ## Problem
 
@@ -102,7 +103,7 @@ external_run_id: null
 last_outcome: null
 ```
 
-Possible states:
+Possible states (illustrative):
 
 ```text
 READY
@@ -122,6 +123,14 @@ FAILED
 
 The exact graph is less important than one rule: **state exists outside the agent session.**
 
+The source harness did not keep this graph. Its states follow what the controller
+can observe from outside: the board column a work item is in, whether its pull
+request is a draft, and what review and CI report. It added three states this
+list lacks: a hold for a design that needs human review before work starts, a
+hold for a change that is ready but needs human approval to merge, and a park
+state for work whose bounded retries are spent. Start from what you can observe,
+not from the phases you imagine.
+
 ## Controller tick
 
 A straightforward controller is a good first implementation.
@@ -136,7 +145,7 @@ def tick():
             dispatch(workflow, transition)
 ```
 
-Run it under a normal scheduler or service manager. A one-minute tick is often better than a fragile conversational wake-up because reliability matters more than elegance at this layer.
+Run it under a normal scheduler or service manager. A plain periodic tick is better than a fragile conversational wake-up because reliability matters more than elegance at this layer. The interval can be coarse: the source harness ticks every ten minutes, because a worker run takes far longer than that and each tick costs platform API quota.
 
 Webhooks can reduce latency later. They should wake or inform the same durable controller, not create a second execution model.
 
@@ -181,6 +190,13 @@ These should normally **not** be human blockers:
 - the workflow needs its next state transition.
 
 The worker returns control. The controller waits, retries or schedules.
+
+Bound the two kinds of failure differently. A substantive failure (the worker
+tried and the work was rejected) should spend a small retry count. An
+infrastructure failure (an outage, a rate limit, a provider that is out of
+quota) should not: bound it by repetition and elapsed time instead. The source
+harness first counted both the same way, and one outage spent the allowance of
+every work item it touched and parked them all for a human.
 
 ## Leases: own work, not conversations
 
@@ -267,6 +283,11 @@ full-CI slots:        2
 merge slots:          1
 ```
 
+The numbers are an example. The source harness runs smaller pools and has no
+full-CI pool, because it gates the expensive suite another way (see the next
+section). Lowering a cap should not evict anyone: let occupancy above the cap
+drain.
+
 That lets cheap cognition-heavy work proceed in parallel without allowing a fleet of agents to stampede a scarce runner pool.
 
 ## Separate review convergence from expensive CI
@@ -296,7 +317,19 @@ This avoids repeatedly running the expensive suite between review findings. A
 candidate changed after either review or CI must return through local validation
 and review; it cannot inherit the earlier review-clean result.
 
+The source harness allows one exception, and only because it can be proven: a
+new head that consists solely of merges from the base branch, with the pull
+request's own path-and-patch diff unchanged, keeps its review. If that
+comparison cannot be read, or is ambiguous, the candidate is held as
+unclassified and goes back to review. See
+[Review evidence bound to a commit](review-evidence-commit-binding.md).
+
 The first remote phases should be cheap enough to iterate. Admit only a review-clean candidate to the expensive suite.
+
+You do not need controller states for this. The source harness has none: review
+converges while the pull request is a draft, and the controller's promotion from
+draft to ready is what starts the full suite, once. See
+[Self-hosted runner admission control](self-hosted-runner-admission-control.md).
 
 ## One policy oracle
 
@@ -383,6 +416,12 @@ Keep durable execution state in the controller and synchronize the board from it
 
 External systems remain authoritative for facts they own — for example GitHub owns the PR SHA and Actions result — but the board should not be the only place that records whether a workflow is waiting, leased, retryable or queued.
 
+A board can still be the channel for human authority, which is a different job
+from scheduling. In the source harness a person moving a card into the "ready"
+column is the release for autonomous delivery, and the controller never writes
+that column itself. The controller reads that move as an input, records it, and
+mirrors its own coarse state back to the other columns.
+
 ## When to adopt Temporal or another workflow engine
 
 Do not introduce a large workflow engine merely because "agent orchestration" sounds like it should have one.
@@ -438,7 +477,14 @@ The agent-specific lesson is that a conversational model is particularly temptin
 
 **Durability does not mean autonomy at every risk level.** High-risk control-plane,
 security or deployment changes may still require human authority. Make that an
-explicit policy state rather than an accidental stall.
+explicit policy state rather than an accidental stall. The source harness lets
+the controller merge a pull request itself only when every one of a short list
+of conditions is proven on the current head: the merge policy says yes, the
+independent reviewer reported no deviation from the architecture or from prior
+agreements, the change carries no architecture decision, it is within the size
+budget without an exception, and it touches no sensitive path. Anything else
+waits in a named hold state with the failed condition recorded, so the person
+sees why they are being asked.
 
 **A controller does not make LLM review independent.** It can enforce who may produce an attestation and bind it to a commit, but reasoning diversity is a separate property.
 
