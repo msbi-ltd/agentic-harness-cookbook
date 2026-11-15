@@ -23,7 +23,8 @@ The source harness began as a mostly linear conversational pipeline. As it
 evolved, another boundary became clear: **governance inside the agent loop is not
 enough if the workflow depends on one long-lived conversation.** [Durable
 controller, disposable agent workers](patterns/durable-controller-agent-workers.md)
-covers the next step.
+covers the next step. The source harness has run on such a controller since
+October 2026, and the conversational loop is retired.
 
 ## Patterns
 

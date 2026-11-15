@@ -1,6 +1,6 @@
 # Pattern: mechanical claim-discipline rules
 
-> **Status:** Prose discipline (no script) · **Last verified:** 2026-08-31  
+> **Status:** Prose discipline (no script) · **Last verified:** 2026-11-15  
 > **Tested against:** n/a — the rules are auditable from the transcript alone  
 > **Enforcement:** Reviewer/self discipline, measured after the fact  
 > **Reference implementation:** none — this pattern is rules, not code
@@ -39,6 +39,11 @@ remembering to use good judgment:
    when it changes" is false unless a monitoring mechanism was actually
    started in this same turn. If nothing was armed, say so plainly
    instead of implying ongoing attention that isn't actually happening.
+   The same holds for work. "Next I'll do Y" is false unless the call
+   that starts Y is in the same turn: between turns nothing runs, so a
+   future-tense sentence with no call behind it is a dropped task.
+   Either start it and report it in the past tense, or list it as an
+   open item with no promise.
 4. **A three-outcome contract for checks, not two.** Any verification
    step reports pass, fail, or *couldn't assess*, and couldn't-assess is
    never silently folded into pass. "I don't know why X broke, here's the
@@ -113,16 +118,35 @@ without having run that command is a made-up verdict.
    instead.
 2. **Don't volunteer claims nobody asked for.** Answer what was asked,
    report what was done, and stop.
-3. **Don't promise a watch you haven't armed.** "I'll watch CI and merge
-   on green" is false unless a monitoring mechanism was actually started
-   in this same turn. If you can't arm one, say "still running, ping me
-   and I'll look."
+3. **Don't promise work or a watch you haven't started.** "I'll watch CI
+   and merge on green" is false unless a monitoring mechanism was actually
+   started in this same turn. If you can't arm one, say "still running,
+   ping me and I'll look." The same holds for "next I'll do Y": start it
+   in this turn and report it in the past tense, or list it as not
+   started.
 ```
 
 Adjust the examples in rule 1 (PR, CI run, file, deployment) to whatever
 your own agent actually touches. The structure, not the exact wording, is
 what matters: a fixed, short list of checkable rules living in the file
 the agent reloads every session.
+
+## Rules the source harness added later
+
+The list above is the core. The source harness has since added rules about
+what it asks of a person, each of them also checkable from the transcript:
+
+- **An ask is one line that says what to do.** Name the item and the action
+  in the imperative. Reasoning goes below the list, not in it.
+- **A retracted ask is an error to count.** Before asking, verify in the same
+  turn that the item is blocked on the person and not on the agent, that the
+  agent cannot do it itself, that the action named is the one that unblocks
+  it, and that this is still true. If any of those cannot be shown, it is
+  could-not-assess, not an ask.
+- **A red check is a symptom, not an instruction to route to a person.** Read
+  the log or the review body before asking, never just the failed status.
+- **Reports end with the asks.** A fixed closing section lists what the person
+  must do, or says "nothing".
 
 ## What this builds on
 

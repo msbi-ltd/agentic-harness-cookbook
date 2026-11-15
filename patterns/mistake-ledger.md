@@ -1,6 +1,6 @@
 # Pattern: mistake ledger with `caught_by`
 
-> **Status:** Reference implementation · **Last verified:** 2026-08-31  
+> **Status:** Reference implementation · **Last verified:** 2026-11-15  
 > **Tested against:** `scripts/ledger.py` (`tests/test_ledger.py`)  
 > **Enforcement:** Convention: records appended at named trigger moments; `caught_by` is the metric  
 > **Reference implementation:** `scripts/ledger.py`

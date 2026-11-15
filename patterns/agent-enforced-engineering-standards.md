@@ -1,6 +1,6 @@
 # Pattern: turn engineering principles into agent-enforced standards
 
-> **Status:** Fine tuning in progress · **Last verified:** 2026-08-31  
+> **Status:** In use · **Last verified:** 2026-11-15  
 > **Enforcement:** named checks at specification and review time  
 > **Reference implementation:** workflow rules, specification evidence and review checks
 
@@ -105,8 +105,19 @@ purpose. Treat each dispatch as a new boundary:
 1. Resolve the required skills from the activity and changed paths.
 2. Pass the explicit list in the worker request.
 3. Load the skills in that worker's context.
-4. Return the loaded list in the structured outcome.
-5. Compare requested and loaded skills before accepting the result.
+4. Return proof of loading in the structured outcome.
+5. Check that proof before accepting the result.
+
+A list the worker reports about itself is weak proof: a worker can list a skill
+it never opened. The source harness replaced the self-reported list with a
+challenge. Three claims are easy to collapse into one and are separate: the
+skill exists in the worker's checkout, the worker can reach it, and the worker
+read it. The dispatch names a skill, a one-time value and a line number, never
+the line's text. The worker must return that line verbatim, and a deterministic
+check compares it with the file's bytes. Returning the one-time value alone,
+without the quoted line, was a bypass and was closed. A worker that cannot load
+a required skill stops and returns control; "the skill file is not present,
+noted, proceeding" is never an acceptable outcome.
 
 Do not hide required domain skills inside another skill unless the runtime
 provides a tested dependency mechanism. A Markdown link saying “also read this
@@ -208,8 +219,8 @@ Keep the concerns separate:
 | short ways-of-working file | tells the agent that skill selection is policy-driven |
 | `skill-policy.yml` | maps activities and paths to required or optional skills |
 | dispatcher or controller adapter | resolves the policy and explicitly loads skills for each worker |
-| worker request and outcome schema | carries `required_skills` and `loaded_skills` |
-| deterministic admission check | rejects a completed activity when a required skill was not loaded |
+| worker request and outcome schema | carries `required_skills` and the worker's proof of loading each one |
+| deterministic admission check | rejects a completed activity when proof for a required skill is missing or wrong |
 | rationale document or ADR | explains why the mapping exists and when to revisit it |
 
 A minimal policy could be:

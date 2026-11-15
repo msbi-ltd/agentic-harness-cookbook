@@ -1,6 +1,6 @@
 # Pattern: architecture decision records as the agent's own memory
 
-> **Status:** Reference implementation · **Last verified:** 2026-08-31  
+> **Status:** Reference implementation · **Last verified:** 2026-11-15  
 > **Tested against:** `scripts/new_adr.py`, `scripts/check_records.py` (`tests/`)  
 > **Enforcement:** Instruction (write + read trigger) backed by a CI collision check  
 > **Reference implementation:** `scripts/new_adr.py` (optional), `scripts/check_records.py`

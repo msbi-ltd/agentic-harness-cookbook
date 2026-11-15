@@ -1,7 +1,7 @@
 # Pattern: Characterization tests before agent-led refactoring
 
 > **Status:** Publication candidate  
-> **Last verified:** 2026-08-31  
+> **Last verified:** 2026-11-15  
 > **Use when:** existing behaviour matters, but the code and its contract are not yet understood well enough to refactor safely
 
 ## Why this pattern exists

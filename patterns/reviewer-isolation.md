@@ -1,7 +1,7 @@
 # Pattern: capability-isolated reviewer (GitHub Actions / GitHub Apps)
 
-> **Status:** Reference sketch (GitHub-specific YAML) · **Last verified:** 2026-08-31  
-> **Tested against:** live reviewer-persona workflow; no standalone script  
+> **Status:** Reference sketch (GitHub-specific YAML) · **Last verified:** 2026-11-15  
+> **Tested against:** live reviewer workflow, in two hosting shapes (see "Where the review runs"); no standalone script  
 > **Enforcement:** isolated reviewer capability + commit-bound evidence + required source provenance  
 > **Reference implementation:** workflow YAML in this page
 
@@ -168,6 +168,25 @@ A different model or provider may reduce correlated reasoning failures. It can i
 A human reviewer adds genuinely independent judgement and authority. Keep it for changes whose risk warrants it, especially changes to the autonomous system's own trust boundary.
 
 A Claude reviewer under a separate App is therefore useful, but it should not be described as independent **reasoning** merely because it has an independent credential.
+
+The source harness has since moved the review of controller-authored changes to
+a different model family from the author, with the model and reasoning effort
+pinned in configuration, recorded for every attempt, and refused before
+inference when the runtime reports something else or nothing. That narrows the
+correlated-failure risk. It is still not described as independent reasoning.
+
+### Where the review runs
+
+The capability boundary does not require inference to run inside the workflow
+that holds the reviewer credential. The source harness now runs review for
+controller-authored changes as a bounded worker on the controller's own host:
+read-only filesystem, a stripped environment, no forge credentials and no
+network tools. The worker produces a candidate verdict. A separate publishing job in
+CI validates that candidate against the live pull request and posts it under the
+reviewer App, whose key never leaves the CI platform. Inference and the
+authority to publish are held by different processes, and the author holds
+neither. Changes not authored by the controller still use the workflow shape
+shown on this page.
 
 ## Commit binding
 
