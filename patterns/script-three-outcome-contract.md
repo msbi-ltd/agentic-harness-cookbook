@@ -1,6 +1,6 @@
 # Pattern: three-outcome contract for guardrail scripts
 
-> **Status:** Reference implementation · **Last verified:** 2026-08-31  
+> **Status:** Reference implementation · **Last verified:** 2026-11-15  
 > **Tested against:** `scripts/check_records.py` (`tests/test_check_records.py`)  
 > **Enforcement:** Convention applied per guardrail: 0 clean / 1 verdict / 2 could-not-assess  
 > **Reference implementation:** `scripts/check_records.py` (worked example)

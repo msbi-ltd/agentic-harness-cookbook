@@ -1,6 +1,6 @@
 # Pattern: release SBOM and built-image scanning
 
-> **Status:** Observed pattern · **Last verified:** 2026-08-31  
+> **Status:** Observed pattern · **Last verified:** 2026-11-15  
 > **Enforcement:** release gate before registry push  
 > **Reference implementation:** CycloneDX SBOM + digest-pinned image scanner
 

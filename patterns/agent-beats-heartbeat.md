@@ -1,6 +1,6 @@
 # Pattern: deadline-based heartbeat protocol
 
-> **Status:** Reference implementation · **Last verified:** 2026-08-31  
+> **Status:** Reference implementation · **Last verified:** 2026-11-15  
 > **Tested against:** `scripts/beats.py` (`tests/test_beats.py`)  
 > **Enforcement:** Worker-liveness convention + supervisor/controller check; **not workflow durability**  
 > **Reference implementation:** `scripts/beats.py`

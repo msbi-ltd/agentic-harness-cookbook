@@ -1,6 +1,6 @@
 # Pattern: treat self-hosted runners as admitted capacity
 
-> **Status:** Implementation pattern · **Last verified:** 2026-08-31  
+> **Status:** Implementation pattern · **Last verified:** 2026-11-15  
 > **Use when:** expensive CI runs on shared self-hosted machines  
 > **Goal:** protect evidence quality while controlling queue pressure
 
